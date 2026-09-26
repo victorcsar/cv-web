@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Víctor César — Desenvolvedor Full Stack / DevOps</title>
+    <meta
+      name="description"
+      content="Currículo de Víctor César: desenvolvedor Full Stack / DevOps com TypeScript, NestJS, React, Python, Docker e Nginx."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta name="theme-color" content="#020617" />
+
+    <!-- Prévia do link (LinkedIn, WhatsApp etc.) -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Víctor César — Desenvolvedor Full Stack / DevOps" />
+    <meta
+      property="og:description"
+      content="Currículo online: TypeScript, NestJS, React, Python, Docker, Nginx e sistemas em produção para telecom."
+    />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Aplica o tema antes da primeira pintura para não piscar. Padrão: escuro. -->
+    <script>
+      ;(function () {
+        var dark = true
+        try {
+          dark = localStorage.getItem('theme') !== 'light'
+        } catch (e) {}
+        if (dark) document.documentElement.classList.add('dark')
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
