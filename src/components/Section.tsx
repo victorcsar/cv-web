@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { reveal } from '../lib/reveal'
 
 interface SectionProps {
   id: string
@@ -11,7 +12,7 @@ interface SectionProps {
 export function Section({ id, title, icon: Icon, children }: SectionProps) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-24 print:break-inside-auto">
-      <div className="mb-5 flex items-center gap-3 print:mb-3">
+      <div ref={reveal} className="reveal mb-5 flex items-center gap-3 print:mb-3">
         <span className="grid size-9 place-items-center rounded-xl bg-blue-600/10 text-blue-600 ring-1 ring-blue-600/15 dark:bg-blue-400/10 dark:text-blue-300 dark:ring-blue-400/20 print:hidden">
           <Icon size={18} strokeWidth={2} aria-hidden="true" />
         </span>

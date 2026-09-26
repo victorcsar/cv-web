@@ -14,11 +14,12 @@ export default function App() {
 
   return (
     <div className="relative isolate min-h-dvh overflow-x-clip">
-      {/* Brilho azul decorativo no topo */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklab,var(--color-blue-500)_14%,transparent),transparent)] dark:bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklab,var(--color-blue-500)_22%,transparent),transparent)] print:hidden"
-      />
+      {/* Luzes azuis no topo, se movendo devagar */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[44rem] overflow-hidden print:hidden">
+        <div className="absolute -top-56 left-1/2 size-[38rem] -translate-x-[85%] animate-glow-a rounded-full bg-blue-500/15 blur-3xl dark:bg-blue-600/25" />
+        <div className="absolute -top-40 left-1/2 size-[32rem] -translate-x-[5%] animate-glow-b rounded-full bg-sky-400/15 blur-3xl dark:bg-sky-500/15" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-slate-50 dark:to-slate-950" />
+      </div>
 
       <Toolbar cv={cv} locale={locale} onLocaleChange={setLocale} theme={theme} onToggleTheme={toggleTheme} />
 

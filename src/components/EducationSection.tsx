@@ -1,13 +1,18 @@
 import { CircleCheck, Clock, GraduationCap } from 'lucide-react'
 import type { CV } from '../data/types'
+import { reveal, revealDelay } from '../lib/reveal'
 import { cardClass, Section } from './Section'
 
 export function EducationSection({ cv }: { cv: CV }) {
   return (
     <Section id="education" title={cv.ui.sections.education} icon={GraduationCap}>
       <ul className="grid gap-3 sm:grid-cols-2 print:block print:space-y-1.5">
-        {cv.education.map((edu) => (
-          <li key={edu.title} className={`${cardClass} flex flex-col p-5 sm:odd:last:col-span-2 print:break-inside-avoid print:border-0 print:p-0`}>
+        {cv.education.map((edu, i) => (
+          <li
+            key={i}
+            ref={reveal}
+            style={revealDelay((i % 2) * 110)}
+            className={`${cardClass} reveal flex flex-col p-5 transition hover:-translate-y-1 hover:border-blue-300 dark:hover:border-blue-400/40 sm:odd:last:col-span-2 print:break-inside-avoid print:border-0 print:p-0`}>
             <h3 className="font-semibold text-slate-900 dark:text-white print:text-sm">{edu.title}</h3>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 print:mt-0 print:text-xs">{edu.institution}</p>
             <p

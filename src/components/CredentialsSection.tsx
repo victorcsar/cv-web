@@ -1,5 +1,6 @@
 import { Award, ExternalLink, Languages } from 'lucide-react'
 import type { CV } from '../data/types'
+import { reveal, revealDelay } from '../lib/reveal'
 import { cardClass, Section } from './Section'
 
 // Certificações e idiomas lado a lado: são blocos curtos.
@@ -8,8 +9,8 @@ export function CredentialsSection({ cv }: { cv: CV }) {
     <div className="grid gap-12 md:grid-cols-2 md:gap-6 print:grid-cols-2 print:gap-6">
       <Section id="certifications" title={cv.ui.sections.certifications} icon={Award}>
         <ul className="space-y-3">
-          {cv.certifications.map((cert) => (
-            <li key={cert.name} className={`${cardClass} p-5 print:border-0 print:p-0`}>
+          {cv.certifications.map((cert, i) => (
+            <li key={i} ref={reveal} className={`${cardClass} reveal p-5 transition hover:-translate-y-1 hover:border-blue-300 dark:hover:border-blue-400/40 print:border-0 print:p-0`}>
               <h3 className="font-semibold text-slate-900 dark:text-white print:text-sm">{cert.name}</h3>
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 print:mt-0 print:text-xs">
                 {cert.issuer} · {cert.date}
@@ -30,10 +31,12 @@ export function CredentialsSection({ cv }: { cv: CV }) {
 
       <Section id="languages" title={cv.ui.sections.languages} icon={Languages}>
         <ul className="space-y-3">
-          {cv.languages.map((lang) => (
+          {cv.languages.map((lang, i) => (
             <li
-              key={lang.name}
-              className={`${cardClass} flex items-center justify-between gap-4 p-5 print:border-0 print:p-0`}
+              key={i}
+              ref={reveal}
+              style={revealDelay(i * 90)}
+              className={`${cardClass} reveal flex items-center justify-between gap-4 p-5 transition hover:-translate-y-1 hover:border-blue-300 dark:hover:border-blue-400/40 print:border-0 print:p-0`}
             >
               <div>
                 <h3 className="font-semibold text-slate-900 dark:text-white print:text-sm">{lang.name}</h3>

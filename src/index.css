@@ -5,6 +5,55 @@
 
 @theme {
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-fade-up: fade-up 0.8s var(--ease-out-expo) both;
+  --animate-spin-slow: spin-slow 8s linear infinite;
+  --animate-glow-a: glow-a 16s ease-in-out infinite;
+  --animate-glow-b: glow-b 20s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Duas luzes azuis que se movem devagar em fases diferentes */
+  @keyframes glow-a {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translate(12%, 8%) scale(1.15);
+      opacity: 1;
+    }
+  }
+
+  @keyframes glow-b {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1.1);
+      opacity: 1;
+    }
+    50% {
+      transform: translate(-14%, 6%) scale(0.95);
+      opacity: 0.75;
+    }
+  }
 }
 
 @layer base {
@@ -21,9 +70,32 @@
   }
 }
 
+/*
+ * Surgir ao rolar: o elemento começa invisível e ganha data-visible
+ * quando entra na tela (ver src/lib/reveal.ts). Usa animation, e não
+ * transition, para não brigar com os efeitos de hover dos cards.
+ */
+.reveal {
+  opacity: 0;
+}
+
+.reveal[data-visible] {
+  animation: var(--animate-fade-up);
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -37,5 +109,11 @@
     background: white;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  .reveal,
+  .animate-fade-up {
+    opacity: 1 !important;
+    animation: none !important;
   }
 }
