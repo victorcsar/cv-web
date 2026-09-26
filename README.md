@@ -44,6 +44,18 @@ Trechos entre `**asteriscos**` aparecem em negrito, como o `\textbf{}` do LaTeX.
 
 O botão passa de **Salvar PDF** (impressão) para **Baixar PDF**.
 
+### Domínio, prévia do link e SEO
+
+- O endereço público fica em `.env` (`VITE_SITE_URL`) e é usado nas meta tags do `index.html`: canonical, Open Graph, Twitter e dados estruturados.
+- `public/robots.txt` e `public/sitemap.xml` têm o endereço escrito direto; se o domínio mudar, atualize os dois também.
+- A imagem de prévia (`public/og-image.png`, 1200×630) e o ícone da tela inicial (`public/apple-touch-icon.png`) saem de um script. Depois de trocar a foto ou o cargo, gere de novo:
+
+```bash
+npm run images
+```
+
+Para testar a prévia depois de publicar: [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) (também limpa o cache do LinkedIn) e [opengraph.xyz](https://www.opengraph.xyz/).
+
 ## Deploy na Vercel
 
 1. Suba o repositório para o GitHub

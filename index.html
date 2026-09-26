@@ -8,20 +8,65 @@
       name="description"
       content="Currículo de Víctor César: desenvolvedor Full Stack / DevOps com TypeScript, NestJS, React, Python, Docker e Nginx."
     />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="author" content="Víctor César da Rocha Bastos" />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
 
+    <!-- Versões por idioma (o inglês é a mesma página com ?lang=en) -->
+    <link rel="alternate" hreflang="pt-BR" href="%VITE_SITE_URL%/" />
+    <link rel="alternate" hreflang="en" href="%VITE_SITE_URL%/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="%VITE_SITE_URL%/" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#020617" />
 
-    <!-- Prévia do link (LinkedIn, WhatsApp etc.) -->
+    <!-- Prévia do link (LinkedIn, WhatsApp, Telegram, Discord etc.) -->
     <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Víctor César" />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
     <meta property="og:title" content="Víctor César — Desenvolvedor Full Stack / DevOps" />
     <meta
       property="og:description"
       content="Currículo online: TypeScript, NestJS, React, Python, Docker, Nginx e sistemas em produção para telecom."
     />
+    <meta property="og:image" content="%VITE_SITE_URL%/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Víctor César, Desenvolvedor Full Stack / DevOps" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:locale:alternate" content="en_US" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="profile:first_name" content="Víctor César" />
+    <meta property="profile:last_name" content="da Rocha Bastos" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Víctor César — Desenvolvedor Full Stack / DevOps" />
+    <meta
+      name="twitter:description"
+      content="Currículo online: TypeScript, NestJS, React, Python, Docker, Nginx e sistemas em produção para telecom."
+    />
+    <meta name="twitter:image" content="%VITE_SITE_URL%/og-image.png" />
+
+    <!-- Dados estruturados para buscadores (Google) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Víctor César da Rocha Bastos",
+        "jobTitle": "Desenvolvedor Full Stack / DevOps",
+        "url": "%VITE_SITE_URL%/",
+        "image": "%VITE_SITE_URL%/foto-perfil.jpg",
+        "email": "mailto:victorcesagx@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Santo Estêvão",
+          "addressRegion": "BA",
+          "addressCountry": "BR"
+        },
+        "worksFor": { "@type": "Organization", "name": "PowerTelecom" },
+        "sameAs": ["https://www.linkedin.com/in/victorcesarbastos", "https://github.com/victorcsar"]
+      }
+    </script>
 
     <!-- Aplica o tema antes da primeira pintura para não piscar. Padrão: escuro. -->
     <script>

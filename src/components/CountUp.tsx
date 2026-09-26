@@ -14,23 +14,24 @@ function groupDigits(n: number, separator: string) {
   return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, separator)
 }
 
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
 // Conta de zero até o valor quando o número aparece na tela.
 export function CountUp({ value, delay = 0, duration = 1600 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null)
-  const [progress, setProgress] = useState(0)
+  // Com "reduzir movimento" ativo, já começa no valor final.
+  const [progress, setProgress] = useState(() => (prefersReducedMotion() ? 1 : 0))
 
   const match = PATTERN.exec(value)
+  const isNumber = match !== null
   const target = match ? Number(match[2].replace(/[.,]/g, '')) : 0
   const separator = match?.[2].match(/[.,]/)?.[0] ?? ''
 
+  // As dependências não mudam ao trocar de idioma (só o separador de milhar muda),
+  // então a contagem roda uma vez só.
   useEffect(() => {
     const el = ref.current
-    if (!el || !match) return
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setProgress(1)
-      return
-    }
+    if (!el || !isNumber || prefersReducedMotion()) return
 
     let frame = 0
     let timeout = 0
@@ -54,8 +55,7 @@ export function CountUp({ value, delay = 0, duration = 1600 }: CountUpProps) {
       clearTimeout(timeout)
       cancelAnimationFrame(frame)
     }
-    // Anima uma vez só; trocar de idioma só muda o separador de milhar.
-  }, [])
+  }, [isNumber, delay, duration])
 
   if (!match) return <>{value}</>
 
