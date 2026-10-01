@@ -60,7 +60,7 @@ O botão passa de **Salvar PDF** (impressão) para **Baixar PDF**.
 
 - O endereço público fica na variável `VITE_SITE_URL` e é usado nas meta tags do `index.html`: canonical, Open Graph, Twitter e dados estruturados. Localmente ela vem do `.env`; na Vercel, de **Settings → Environment Variables**.
 - `public/robots.txt` e `public/sitemap.xml` têm o endereço escrito direto; se o domínio mudar, atualize os dois também.
-- A imagem de prévia (`public/og-image.jpg`, 1200×630) e o ícone da tela inicial (`public/apple-touch-icon.png`) saem de um script. Depois de trocar a foto ou o cargo, gere de novo:
+- A imagem de prévia (`public/og-terminal.jpg`, 1200×630) e o ícone da tela inicial (`public/apple-touch-icon.png`) saem de um script. Depois de trocar a foto ou o cargo, gere de novo:
 
 ```bash
 npm run images
