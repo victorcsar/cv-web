@@ -11,7 +11,7 @@ Currículo online de **Víctor César da Rocha Bastos**, desenvolvedor Full Stac
 
 React 19, TypeScript, Vite, Tailwind CSS v4 e lucide-react.
 
-O layout é editorial: uma coluna de rótulos à esquerda, conteúdo à direita e linhas finas no lugar de cards. São três fontes, cada uma com um papel: Newsreader (serifada) no nome e nos títulos, IBM Plex Sans no texto e IBM Plex Mono nos rótulos, datas e tecnologias.
+O layout imita um terminal: cada seção abre com um comando (`cat resumo.md`, por exemplo), que é digitado quando a seção entra na tela, e o conteúdo aparece em seguida como a saída do comando. As animações são todas em CSS (`src/index.css`); `src/lib/reveal.ts` só avisa quando cada seção aparece e põe os comandos em fila. São duas fontes: IBM Plex Mono nos comandos, títulos e rótulos, e IBM Plex Sans nos parágrafos. Na impressão os comandos somem e o resultado é um currículo comum em duas páginas A4.
 
 ## Rodando localmente
 

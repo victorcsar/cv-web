@@ -1,5 +1,6 @@
 import { profile } from '../data/profile'
 import type { CV } from '../data/types'
+import { line } from '../lib/reveal'
 import { RichText } from './RichText'
 import { linkClass, Section } from './Section'
 
@@ -9,14 +10,16 @@ const contacts = [
   { label: 'github', text: profile.github.replace('https://', ''), href: profile.github },
 ]
 
-// As três primeiras linhas do currículo: contato, resumo e números.
+// As três primeiras saídas do terminal: contato, resumo e números.
 export function IntroSections({ cv }: { cv: CV }) {
+  const { sections, commands } = cv.ui
+
   return (
     <>
-      <Section id="contact" title={cv.ui.contact}>
-        <dl className="grid grid-cols-[4.25rem_1fr] gap-x-3 gap-y-2 font-mono text-xs print:gap-y-1 sm:grid-cols-[4.75rem_1fr] sm:gap-x-4 sm:text-sm">
-          {contacts.map(({ label, text, href }) => (
-            <div key={label} className="contents">
+      <Section id="contact" title={cv.ui.contact} command={commands.contact}>
+        <dl className="space-y-1.5 font-mono text-xs sm:text-sm print:space-y-1">
+          {contacts.map(({ label, text, href }, i) => (
+            <div key={label} style={line(i)} className="out grid grid-cols-[4.25rem_1fr] gap-x-3 sm:grid-cols-[5.5rem_1fr]">
               <dt className="text-slate-500 dark:text-slate-400">{label}</dt>
               <dd className="min-w-0">
                 <a
@@ -32,18 +35,18 @@ export function IntroSections({ cv }: { cv: CV }) {
         </dl>
       </Section>
 
-      <Section id="summary" title={cv.ui.sections.summary}>
-        <p className="font-serif text-xl leading-relaxed text-pretty text-slate-700 sm:text-[1.375rem] dark:text-slate-200 print:text-base print:leading-snug">
+      <Section id="summary" title={sections.summary} command={commands.summary}>
+        <p className="out leading-relaxed text-pretty sm:text-[1.0625rem] print:leading-snug">
           <RichText text={cv.summary} />
         </p>
       </Section>
 
-      <Section id="highlights" title={cv.ui.sections.highlights}>
-        <dl className="grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-4 print:grid-cols-4">
-          {cv.highlights.map((h) => (
-            <div key={h.label} className="flex flex-col">
-              <dt className="mt-2 text-sm leading-snug text-slate-500 dark:text-slate-400">{h.label}</dt>
-              <dd className="order-first font-serif text-4xl leading-none text-slate-900 tabular-nums sm:text-5xl dark:text-white print:text-3xl">
+      <Section id="highlights" title={sections.highlights} command={commands.highlights}>
+        <dl className="space-y-2 print:space-y-1">
+          {cv.highlights.map((h, i) => (
+            <div key={i} style={line(i)} className="out grid grid-cols-[4.5rem_1fr] items-baseline gap-x-3 sm:grid-cols-[5.5rem_1fr]">
+              <dt className="order-last">{h.label}</dt>
+              <dd className="font-mono text-lg font-medium text-blue-700 tabular-nums dark:text-sky-300 print:text-base print:text-blue-800">
                 {h.value}
               </dd>
             </div>

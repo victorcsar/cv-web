@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/newsreader/opsz.css';
 @import '@fontsource/ibm-plex-sans/400.css';
 @import '@fontsource/ibm-plex-sans/500.css';
 @import '@fontsource/ibm-plex-sans/600.css';
@@ -9,33 +8,19 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Três fontes, cada uma com um papel:
- * - serifada (Newsreader): nome e títulos
- * - sem serifa (IBM Plex Sans): texto corrido
- * - monoespaçada (IBM Plex Mono): rótulos, datas e tecnologias
+ * Duas fontes:
+ * - monoespaçada (IBM Plex Mono): comandos, títulos, rótulos e datas
+ * - sem serifa (IBM Plex Sans): parágrafos, para a leitura não cansar
  */
 @theme {
   --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Newsreader Variable', ui-serif, Georgia, serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --animate-fade-up: fade-up 0.8s var(--ease-out-expo) both;
-  --animate-blink: blink 1.2s step-end infinite;
+  --animate-blink: blink 1.1s step-end infinite;
 
-  @keyframes fade-up {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  /* Cursor de terminal da logo: aceso metade do tempo, apagado na outra */
+  /* Cursor de terminal: aceso metade do tempo, apagado na outra */
   @keyframes blink {
     50% {
       opacity: 0;
@@ -54,6 +39,98 @@
 
   ::selection {
     @apply bg-blue-600/20 dark:bg-blue-400/30;
+  }
+}
+
+/*
+ * Animações de terminal, todas em CSS.
+ *
+ * Cada bloco `.term` guarda em --n o tamanho do comando. Quando o bloco entra
+ * na tela (src/lib/reveal.ts põe `data-visible`):
+ *   0. a linha do prompt aparece;
+ *   1. `.type` digita o comando, um caractere por passo;
+ *   2. o cursor some quando a digitação termina;
+ *   3. cada `.out` aparece em seguida, na ordem de --i, como linhas impressas.
+ */
+.term {
+  --type-speed: 40ms;
+  --type-delay: 150ms;
+  --typed: calc(var(--type-delay) + var(--n) * var(--type-speed));
+}
+
+/* A linha do prompt só aparece na vez dela (ver a fila em src/lib/reveal.ts). */
+.prompt {
+  opacity: 0;
+}
+
+.term[data-visible] .prompt {
+  animation: prompt-on 1ms linear calc(var(--type-delay) - 150ms) forwards;
+}
+
+@keyframes prompt-on {
+  to {
+    opacity: 1;
+  }
+}
+
+.type {
+  display: inline-block;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+.term[data-visible] .type {
+  animation: type calc(var(--n) * var(--type-speed)) steps(var(--n)) var(--type-delay) forwards;
+}
+
+@keyframes type {
+  to {
+    width: calc(var(--n) * 1ch);
+  }
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.15em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: currentColor;
+  animation: var(--animate-blink);
+}
+
+/* O cursor de um comando some pouco depois de ele ser digitado. */
+.term[data-visible] .cursor-temp {
+  animation:
+    var(--animate-blink),
+    cursor-off 0s linear calc(var(--typed) + 500ms) forwards;
+}
+
+@keyframes cursor-off {
+  to {
+    visibility: hidden;
+  }
+}
+
+.out {
+  opacity: 0;
+}
+
+.term[data-visible] .out {
+  animation: print-out 0.4s var(--ease-out-expo) both;
+  animation-delay: calc(var(--typed) + 120ms + var(--i, 0) * 70ms);
+}
+
+@keyframes print-out {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -91,7 +168,8 @@
     print-color-adjust: exact;
   }
 
-  .animate-fade-up {
+  /* No papel nada é animado: tudo já aparece. */
+  .out {
     opacity: 1 !important;
     animation: none !important;
   }

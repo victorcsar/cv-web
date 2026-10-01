@@ -69,6 +69,17 @@ export interface CV {
       certifications: string
       languages: string
     }
+    /** Comandos de terminal que abrem cada seção (sem acentos: são nomes de arquivo). */
+    commands: {
+      contact: string
+      summary: string
+      highlights: string
+      experience: string
+      skills: string
+      education: string
+      certifications: string
+      languages: string
+    }
     downloadPdf: string
     savePdf: string
     toggleTheme: string

@@ -1,19 +1,23 @@
 import type { CV } from '../data/types'
-import { dividerClass, linkClass, Section } from './Section'
+import { line } from '../lib/reveal'
+import { linkClass, Section } from './Section'
+
+const rowClass = 'out flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6 print:flex-row'
+const titleClass = 'font-mono text-[0.9375rem] font-medium text-slate-900 dark:text-white'
+const detailClass = 'mt-0.5 text-sm text-slate-500 dark:text-slate-400'
 
 export function CredentialsSection({ cv }: { cv: CV }) {
+  const { sections, commands } = cv.ui
+
   return (
     <>
-      <Section id="certifications" title={cv.ui.sections.certifications}>
-        <ul className={dividerClass}>
+      <Section id="certifications" title={sections.certifications} command={commands.certifications}>
+        <ul className="space-y-4 print:space-y-1.5">
           {cv.certifications.map((cert, i) => (
-            <li
-              key={i}
-              className="flex flex-col gap-1.5 py-4 first:pt-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6 print:flex-row"
-            >
+            <li key={i} style={line(i)} className={rowClass}>
               <div>
-                <h3 className="font-serif text-xl leading-snug text-slate-900 dark:text-white">{cert.name}</h3>
-                <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+                <h3 className={titleClass}>{cert.name}</h3>
+                <p className={detailClass}>
                   {cert.issuer} · {cert.date}
                 </p>
               </div>
@@ -25,16 +29,13 @@ export function CredentialsSection({ cv }: { cv: CV }) {
         </ul>
       </Section>
 
-      <Section id="languages" title={cv.ui.sections.languages}>
-        <ul className={dividerClass}>
+      <Section id="languages" title={sections.languages} command={commands.languages}>
+        <ul className="space-y-4 print:space-y-1.5">
           {cv.languages.map((lang, i) => (
-            <li
-              key={i}
-              className="flex flex-col gap-1.5 py-4 first:pt-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6 print:flex-row"
-            >
+            <li key={i} style={line(i)} className={rowClass}>
               <div>
-                <h3 className="font-serif text-xl leading-snug text-slate-900 dark:text-white">{lang.name}</h3>
-                {lang.source && <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">{lang.source}</p>}
+                <h3 className={titleClass}>{lang.name}</h3>
+                {lang.source && <p className={detailClass}>{lang.source}</p>}
               </div>
               <p className="shrink-0 font-mono text-xs text-slate-500 dark:text-slate-400">{lang.level}</p>
             </li>
