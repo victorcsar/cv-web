@@ -15,8 +15,11 @@ React 19, TypeScript, Vite, Tailwind CSS v4 e lucide-react.
 
 ```bash
 npm install
+cp .env.example .env
 npm run dev
 ```
+
+Depois de copiar, ajuste o `VITE_SITE_URL` no `.env`. Esse arquivo não vai para o repositório.
 
 Build de produção:
 
@@ -46,7 +49,7 @@ O botão passa de **Salvar PDF** (impressão) para **Baixar PDF**.
 
 ### Domínio, prévia do link e SEO
 
-- O endereço público fica em `.env` (`VITE_SITE_URL`) e é usado nas meta tags do `index.html`: canonical, Open Graph, Twitter e dados estruturados.
+- O endereço público fica na variável `VITE_SITE_URL` e é usado nas meta tags do `index.html`: canonical, Open Graph, Twitter e dados estruturados. Localmente ela vem do `.env`; na Vercel, de **Settings → Environment Variables**.
 - `public/robots.txt` e `public/sitemap.xml` têm o endereço escrito direto; se o domínio mudar, atualize os dois também.
 - A imagem de prévia (`public/og-image.png`, 1200×630) e o ícone da tela inicial (`public/apple-touch-icon.png`) saem de um script. Depois de trocar a foto ou o cargo, gere de novo:
 
@@ -60,5 +63,6 @@ Para testar a prévia depois de publicar: [LinkedIn Post Inspector](https://www.
 
 1. Suba o repositório para o GitHub
 2. Na Vercel, clique em **Add New → Project** e importe o repositório
-3. A Vercel detecta o Vite sozinha (build `npm run build`, saída `dist`). Não precisa de nenhuma configuração extra
-4. Cada push na branch principal publica uma nova versão; cada pull request ganha um link de prévia
+3. A Vercel detecta o Vite sozinha (build `npm run build`, saída `dist`)
+4. Em **Settings → Environment Variables**, crie `VITE_SITE_URL` com o endereço do site (sem barra no fim), para Production e Preview. Sem ela, as meta tags saem com `%VITE_SITE_URL%` no lugar do endereço
+5. Cada push na branch principal publica uma nova versão; cada pull request ganha um link de prévia
