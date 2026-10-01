@@ -1,7 +1,7 @@
 import type { CV } from '../data/types'
 import { line } from '../lib/reveal'
 import { RichText } from './RichText'
-import { dividerClass, labelClass, Section } from './Section'
+import { labelClass, Section } from './Section'
 
 export function ExperienceSection({ cv }: { cv: CV }) {
   return (
@@ -27,12 +27,13 @@ export function ExperienceSection({ cv }: { cv: CV }) {
               <p className={`${labelClass} shrink-0`}>{job.period}</p>
             </header>
 
-            <ol className={`${dividerClass} mt-6 border-t border-slate-200 dark:border-slate-800/80 print:mt-3 print:border-slate-300`}>
+            {/* A linha de cima é de cada item, para aparecer junto com ele na animação */}
+            <ol className="mt-6 print:mt-3">
               {job.items.map((item, i) => (
                 <li
                   key={i}
                   style={line(i + 1)}
-                  className="out group grid grid-cols-[2.25rem_1fr] py-5 print:break-inside-avoid print:py-2"
+                  className="out group grid grid-cols-[2.25rem_1fr] border-t border-slate-200 py-5 dark:border-slate-800/80 print:break-inside-avoid print:border-slate-300 print:py-2"
                 >
                   <span
                     aria-hidden="true"

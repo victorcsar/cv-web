@@ -4,9 +4,6 @@ import { reveal, typed } from '../lib/reveal'
 /** Rótulos e datas: monoespaçada pequena. */
 export const labelClass = 'font-mono text-xs tracking-[0.14em] text-slate-500 uppercase dark:text-slate-400'
 
-/** Linha fina que separa itens de uma lista. */
-export const dividerClass = 'divide-y divide-slate-200 dark:divide-slate-800/80 print:divide-slate-300'
-
 export const linkClass =
   'text-slate-900 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-blue-700 hover:decoration-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-slate-100 dark:decoration-slate-700 dark:hover:text-sky-300 dark:hover:decoration-sky-400'
 
