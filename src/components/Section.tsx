@@ -1,41 +1,36 @@
-import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
-import { reveal } from '../lib/reveal'
 
 interface SectionProps {
   id: string
   title: string
-  icon: LucideIcon
   children: ReactNode
 }
 
-export function Section({ id, title, icon: Icon, children }: SectionProps) {
+/** Rótulos, datas e tecnologias: monoespaçada pequena. */
+export const labelClass = 'font-mono text-xs tracking-[0.14em] text-slate-500 uppercase dark:text-slate-400'
+
+/** Linha fina que separa itens de uma lista. */
+export const dividerClass = 'divide-y divide-slate-200 dark:divide-slate-800 print:divide-slate-300'
+
+export const linkClass =
+  'text-slate-900 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-blue-700 hover:decoration-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-slate-100 dark:decoration-slate-700 dark:hover:text-blue-300 dark:hover:decoration-blue-400'
+
+// Uma seção do currículo: rótulo numa coluna estreita à esquerda, conteúdo à direita.
+// No desktop o rótulo acompanha a rolagem enquanto a seção está na tela.
+export function Section({ id, title, children }: SectionProps) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-24 print:break-inside-auto">
-      <div ref={reveal} className="reveal mb-5 flex items-center gap-3 print:mb-3">
-        <span className="grid size-9 place-items-center rounded-xl bg-blue-600/10 text-blue-600 ring-1 ring-blue-600/15 dark:bg-blue-400/10 dark:text-blue-300 dark:ring-blue-400/20 print:hidden">
-          <Icon size={18} strokeWidth={2} aria-hidden="true" />
-        </span>
-        <h2
-          id={`${id}-title`}
-          className="text-lg font-semibold tracking-tight text-slate-900 dark:text-white print:text-base print:uppercase print:tracking-wide"
-        >
-          {title}
-        </h2>
-        <span className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent dark:from-slate-800 print:from-slate-300" />
-      </div>
-      {children}
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className="scroll-mt-14 border-t border-slate-200 py-10 md:grid md:grid-cols-[10rem_1fr] md:gap-x-10 dark:border-slate-800 print:grid print:grid-cols-[9rem_1fr] print:gap-x-6 print:border-slate-300 print:py-4"
+    >
+      <h2
+        id={`${id}-title`}
+        className={`${labelClass} mb-5 md:sticky md:top-20 md:mb-0 md:self-start md:pt-1.5 print:static print:mb-0`}
+      >
+        {title}
+      </h2>
+      <div className="min-w-0">{children}</div>
     </section>
   )
 }
-
-export function Tag({ children }: { children: ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-blue-600/10 ring-inset dark:bg-blue-400/10 dark:text-blue-200 dark:ring-blue-400/20 print:bg-transparent print:px-0 print:ring-0">
-      {children}
-    </span>
-  )
-}
-
-export const cardClass =
-  'rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm shadow-slate-900/[0.03] backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none print:border-slate-300 print:bg-white print:shadow-none'

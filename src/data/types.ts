@@ -62,6 +62,7 @@ export interface CV {
   ui: {
     sections: {
       summary: string
+      highlights: string
       experience: string
       skills: string
       education: string

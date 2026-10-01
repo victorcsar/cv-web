@@ -2,6 +2,8 @@
 export const profile = {
   name: 'Víctor César da Rocha Bastos',
   shortName: 'Víctor César',
+  /** O nome como aparece no topo, uma linha por item. */
+  nameLines: ['Víctor César', 'da Rocha Bastos'],
   email: 'victorcesagx@gmail.com',
   linkedin: 'https://www.linkedin.com/in/victorcesarbastos',
   github: 'https://github.com/victorcsar',

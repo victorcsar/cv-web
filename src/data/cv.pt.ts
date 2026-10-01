@@ -177,6 +177,7 @@ export const cvPt: CV = {
   ui: {
     sections: {
       summary: 'Resumo',
+      highlights: 'Em números',
       experience: 'Experiência',
       skills: 'Habilidades técnicas',
       education: 'Educação',

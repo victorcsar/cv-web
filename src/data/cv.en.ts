@@ -180,6 +180,7 @@ export const cvEn: CV = {
   ui: {
     sections: {
       summary: 'Summary',
+      highlights: 'In numbers',
       experience: 'Experience',
       skills: 'Technical skills',
       education: 'Education',
