@@ -18,6 +18,8 @@ Duas partes do terminal são de verdade:
 - **Menu `ls`** (`src/components/SectionsMenu.tsx`): logo abaixo do nome, lista as seções como arquivos, e cada um leva até a sua seção.
 - **Prompt interativo** (`src/components/Shell.tsx`): no fim da página, aceita `help`, `ls`, `cat <arquivo>`, `open <linkedin|github|email>`, `lang <pt|en>`, `theme`, `pdf`, `top` e `clear`. Os textos ficam em `ui.shell`, nos arquivos de dados.
 
+Em telas largas (a partir de 1280 px), as margens mostram linhas de log subindo devagar (`src/components/SideLogs.tsx`). São só decoração: as linhas são inventadas e ficam em `src/data/logs.ts`.
+
 ## Rodando localmente
 
 ```bash

@@ -151,6 +151,30 @@
   }
 }
 
+/*
+ * Logs decorativos nas margens (src/components/SideLogs.tsx).
+ * A máscara apaga as linhas em cima, embaixo e na ponta direita, para elas
+ * surgirem e sumirem aos poucos em vez de serem cortadas.
+ */
+.side-log {
+  mask-image:
+    linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent),
+    linear-gradient(to right, #000 60%, transparent);
+  mask-composite: intersect;
+}
+
+.side-log-track {
+  animation: log-scroll var(--log-time, 100s) linear infinite;
+  will-change: transform;
+}
+
+/* A faixa tem quatro cópias da lista: subir 25% é subir exatamente uma cópia. */
+@keyframes log-scroll {
+  to {
+    transform: translateY(-25%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -183,6 +207,10 @@
     background: white;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  .side-log {
+    display: none !important;
   }
 
   /* No papel nada é animado: tudo já aparece. */

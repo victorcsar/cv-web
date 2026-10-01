@@ -5,6 +5,7 @@ import { Hero } from './components/Hero'
 import { IntroSections } from './components/IntroSections'
 import { SectionsMenu } from './components/SectionsMenu'
 import { Shell } from './components/Shell'
+import { SideLogs } from './components/SideLogs'
 import { SkillsSection } from './components/SkillsSection'
 import { Toolbar } from './components/Toolbar'
 import { profile } from './data/profile'
@@ -17,6 +18,7 @@ export default function App() {
 
   return (
     <div className="min-h-dvh">
+      <SideLogs />
       <Toolbar cv={cv} locale={locale} onLocaleChange={setLocale} theme={theme} onToggleTheme={toggleTheme} />
 
       <main className="mx-auto max-w-3xl px-5 sm:px-6 print:max-w-none print:px-0">
