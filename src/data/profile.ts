@@ -2,7 +2,6 @@
 export const profile = {
   name: 'Víctor César da Rocha Bastos',
   shortName: 'Víctor César',
-  initials: 'VC',
   email: 'victorcesagx@gmail.com',
   linkedin: 'https://www.linkedin.com/in/victorcesarbastos',
   github: 'https://github.com/victorcsar',

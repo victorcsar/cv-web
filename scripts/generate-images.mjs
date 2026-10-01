@@ -1,7 +1,6 @@
 // Gera as imagens estáticas do site: `npm run images`.
 // - public/og-image.jpg: prévia do link no LinkedIn, WhatsApp etc. (1200×630, JPEG leve: o WhatsApp no celular é exigente com o tamanho)
 // - public/apple-touch-icon.png: ícone ao salvar o site na tela inicial do celular (180×180)
-import { readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
 
@@ -16,6 +15,12 @@ const cx = PHOTO_X + PHOTO_SIZE / 2
 const cy = PHOTO_Y + PHOTO_SIZE / 2
 
 const font = "'Segoe UI', 'Inter', Arial, sans-serif"
+// Geometria da logo (design/logos): V com cursor de terminal.
+const V_FULL = '6,14 18,14 27,38 36,14 48,14 33,50 21,50'
+const V_LEFT = '6,14 18,14 27,38 27,50 21,50'
+const V_RIGHT = '27,38 36,14 48,14 33,50 27,50'
+const CURSOR = 'x="44" y="42" width="14" height="8" rx="2"'
+
 const stack = ['TypeScript', 'NestJS', 'React', 'Python', 'Docker', 'Nginx']
 
 const background = `
@@ -55,8 +60,14 @@ const background = `
     <text x="440" y="392" font-size="38" font-weight="600" fill="url(#role)">Desenvolvedor Full Stack / DevOps</text>
     <text x="440" y="450" font-size="26" fill="#94a3b8">${stack.join('  ·  ')}</text>
 
-    <circle cx="449" cy="551" r="7" fill="#3b82f6"/>
-    <text x="468" y="560" font-size="26" font-weight="600" fill="#cbd5e1">victorcesar.com.br</text>
+    <text x="498" y="560" font-size="26" font-weight="600" fill="#cbd5e1">victorcesar.com.br</text>
+  </g>
+
+  <!-- logo (variação F3) ao lado do endereço -->
+  <g transform="translate(440 527) scale(0.72)">
+    <polygon points="${V_LEFT}" fill="#ffffff"/>
+    <polygon points="${V_RIGHT}" fill="#3b82f6"/>
+    <rect ${CURSOR} fill="#38bdf8"/>
   </g>
 </svg>`
 
@@ -75,11 +86,19 @@ await sharp(Buffer.from(background))
   .jpeg({ quality: 86, mozjpeg: true, chromaSubsampling: '4:4:4' })
   .toFile(fileURLToPath(new URL('og-image.jpg', PUBLIC)))
 
-// Ícone da tela inicial: o mesmo "VC" do favicon, sem transparência (iOS não aceita).
-const favicon = await readFile(new URL('favicon.svg', PUBLIC))
-await sharp(favicon, { density: 300 })
+// Ícone da tela inicial: o selo escuro do favicon, mas ocupando o quadrado todo
+// (o celular arredonda os cantos sozinho, e o iOS não aceita transparência).
+const touchIcon = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="180" height="180">
+  <rect width="64" height="64" fill="#0f172a"/>
+  <g transform="translate(8 8) scale(0.75)">
+    <polygon points="${V_FULL}" fill="#ffffff"/>
+    <rect ${CURSOR} fill="#3b82f6"/>
+  </g>
+</svg>`
+
+await sharp(Buffer.from(touchIcon), { density: 300 })
   .resize(180, 180)
-  .flatten({ background: '#1d4ed8' })
   .png()
   .toFile(fileURLToPath(new URL('apple-touch-icon.png', PUBLIC)))
 

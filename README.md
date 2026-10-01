@@ -57,6 +57,8 @@ O botão passa de **Salvar PDF** (impressão) para **Baixar PDF**.
 npm run images
 ```
 
+A logo fica em `design/logos` (SVG e PNG de todas as opções desenhadas). O site usa a variação F3 na barra do topo (`src/components/Logo.tsx`) e na imagem de prévia, e a F6 no favicon (`public/favicon.svg`).
+
 Para testar a prévia depois de publicar: [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) (também limpa o cache do LinkedIn) e [opengraph.xyz](https://www.opengraph.xyz/).
 
 ## Deploy na Vercel

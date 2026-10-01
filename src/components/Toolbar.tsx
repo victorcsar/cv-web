@@ -2,6 +2,7 @@ import { Download, Moon, Printer, Sun } from 'lucide-react'
 import { profile } from '../data/profile'
 import type { CV, Locale } from '../data/types'
 import type { Theme } from '../hooks/useTheme'
+import { Logo } from './Logo'
 
 interface ToolbarProps {
   cv: CV
@@ -26,10 +27,8 @@ export function Toolbar({ cv, locale, onLocaleChange, theme, onToggleTheme }: To
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-slate-50/75 backdrop-blur-md dark:border-slate-800/70 dark:bg-slate-950/70 print:hidden">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-3 px-4 sm:px-6">
-        <a href="#top" className="flex items-center gap-2.5 rounded-lg focus-visible:outline-2 focus-visible:outline-blue-500">
-          <span className="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 text-xs font-bold text-white">
-            {profile.initials}
-          </span>
+        <a href="#top" aria-label={profile.shortName} className="flex items-center gap-2.5 rounded-lg focus-visible:outline-2 focus-visible:outline-blue-500">
+          <Logo className="h-6 w-auto text-slate-900 dark:text-white" />
           <span className="hidden text-sm font-semibold text-slate-900 sm:block dark:text-white">
             {profile.shortName}
           </span>
