@@ -36,8 +36,7 @@ export function Hero({ cv }: { cv: CV }) {
           alt={profile.name}
           width={480}
           height={480}
-          style={line(1)}
-          className="out size-24 shrink-0 rounded-sm border border-slate-300 object-cover sm:size-32 dark:border-slate-700 print:hidden"
+          className="scan size-24 shrink-0 rounded-sm border border-slate-300 object-cover sm:size-32 dark:border-slate-700 print:hidden"
         />
       </div>
     </header>

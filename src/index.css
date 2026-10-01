@@ -55,7 +55,8 @@
  *   0. a linha do prompt aparece;
  *   1. `.type` digita o comando, um caractere por passo;
  *   2. o cursor some quando a digitação termina;
- *   3. cada `.out` aparece em seguida, na ordem de --i, como linhas impressas.
+ *   3. cada `.out` aparece em seguida, na ordem de --i, como linhas impressas;
+ *   4. a foto (`.scan`) é desenhada em faixas.
  */
 .term {
   --type-speed: 40ms;
@@ -140,6 +141,27 @@
   animation-delay: calc(var(--typed) + 120ms + var(--i, 0) * 70ms);
 }
 
+/*
+ * A foto é "desenhada" em faixas, de cima para baixo, como uma imagem
+ * carregando num terminal. Fora da animação ela aparece inteira.
+ */
+.term:not([data-visible]) .scan {
+  clip-path: inset(0 0 100% 0);
+}
+
+.term[data-visible] .scan {
+  animation: scan 0.7s steps(10) calc(var(--typed) + 190ms) backwards;
+}
+
+@keyframes scan {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
 @keyframes print-out {
   from {
     opacity: 0;
@@ -216,6 +238,11 @@
   /* No papel nada é animado: tudo já aparece. */
   .out {
     opacity: 1 !important;
+    animation: none !important;
+  }
+
+  .scan {
+    clip-path: none !important;
     animation: none !important;
   }
 }

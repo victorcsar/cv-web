@@ -3,6 +3,7 @@ import { profile } from '../data/profile'
 import type { CV, Locale } from '../data/types'
 import type { Theme } from '../hooks/useTheme'
 import { Logo } from './Logo'
+import { ReadingProgress } from './ReadingProgress'
 
 interface ToolbarProps {
   cv: CV
@@ -17,24 +18,25 @@ const locales: Locale[] = ['pt', 'en']
 const control =
   'rounded-sm transition-colors hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500 dark:hover:text-white'
 
-// Barra fina no topo: logo à esquerda; idioma, tema e PDF como texto simples à direita.
+// Barra fina no topo: logo e nome à esquerda; idioma, tema e PDF como texto simples
+// à direita. Na base, a linha de progresso da leitura.
 export function Toolbar({ cv, locale, onLocaleChange, theme, onToggleTheme }: ToolbarProps) {
   const pdfLabel = profile.pdfUrl ? cv.ui.downloadPdf : cv.ui.savePdf
   const pdfClass = `${control} text-blue-700 uppercase dark:text-blue-300`
 
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 print:hidden">
-      <div className="mx-auto flex h-14 max-w-4xl items-center justify-between gap-4 px-5 sm:px-6">
+      <div className="mx-auto flex h-14 max-w-4xl items-center justify-between gap-3 px-5 sm:gap-4 sm:px-6">
         <a
           href="#top"
           aria-label={profile.shortName}
-          className="flex items-center gap-2.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
+          className="flex min-w-0 items-center gap-2.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
         >
-          <Logo className="h-5 w-auto text-slate-900 dark:text-white" />
-          <span className="hidden font-mono text-sm text-slate-900 sm:block dark:text-white">{profile.shortName}</span>
+          <Logo className="h-5 w-auto shrink-0 text-slate-900 dark:text-white" />
+          <span className="truncate font-mono text-[0.8125rem] text-slate-900 sm:text-sm dark:text-white">{profile.shortName}</span>
         </a>
 
-        <div className="flex items-center gap-5 font-mono text-xs tracking-wider text-slate-500 dark:text-slate-400">
+        <div className="flex shrink-0 items-center gap-3 font-mono text-xs tracking-wider text-slate-500 sm:gap-5 dark:text-slate-400">
           <div role="group" aria-label={cv.ui.switchLanguage} className="flex items-center gap-1.5">
             {locales.map((value, i) => (
               <span key={value} className="flex items-center gap-1.5">
@@ -70,6 +72,8 @@ export function Toolbar({ cv, locale, onLocaleChange, theme, onToggleTheme }: To
           )}
         </div>
       </div>
+
+      <ReadingProgress />
     </header>
   )
 }
