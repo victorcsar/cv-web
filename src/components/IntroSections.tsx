@@ -12,11 +12,11 @@ const contacts = [
 
 // As três primeiras saídas do terminal: contato, resumo e números.
 export function IntroSections({ cv }: { cv: CV }) {
-  const { sections, commands } = cv.ui
+  const { sections, files } = cv.ui
 
   return (
     <>
-      <Section id="contact" title={cv.ui.contact} command={commands.contact}>
+      <Section id="contact" title={cv.ui.contact} command={`cat ${files.contact}`}>
         <dl className="space-y-1.5 font-mono text-xs sm:text-sm print:space-y-1">
           {contacts.map(({ label, text, href }, i) => (
             <div key={label} style={line(i)} className="out grid grid-cols-[4.25rem_1fr] gap-x-3 sm:grid-cols-[5.5rem_1fr]">
@@ -35,13 +35,13 @@ export function IntroSections({ cv }: { cv: CV }) {
         </dl>
       </Section>
 
-      <Section id="summary" title={sections.summary} command={commands.summary}>
+      <Section id="summary" title={sections.summary} command={`cat ${files.summary}`}>
         <p className="out leading-relaxed text-pretty sm:text-[1.0625rem] print:leading-snug">
           <RichText text={cv.summary} />
         </p>
       </Section>
 
-      <Section id="highlights" title={sections.highlights} command={commands.highlights}>
+      <Section id="highlights" title={sections.highlights} command={`cat ${files.highlights}`}>
         <dl className="space-y-2 print:space-y-1">
           {cv.highlights.map((h, i) => (
             <div key={i} style={line(i)} className="out grid grid-cols-[4.5rem_1fr] items-baseline gap-x-3 sm:grid-cols-[5.5rem_1fr]">

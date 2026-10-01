@@ -4,7 +4,7 @@ import { Section } from './Section'
 
 export function SkillsSection({ cv }: { cv: CV }) {
   return (
-    <Section id="skills" title={cv.ui.sections.skills} command={cv.ui.commands.skills}>
+    <Section id="skills" title={cv.ui.sections.skills} command={`cat ${cv.ui.files.skills}`}>
       <dl className="space-y-3 print:space-y-1">
         {cv.skills.map((skill, i) => (
           <div key={i} style={line(i)} className="out grid gap-0.5 sm:grid-cols-[12rem_1fr] sm:gap-4 print:grid-cols-[10rem_1fr]">

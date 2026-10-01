@@ -30,7 +30,7 @@ function show(el: Element, wait = 0) {
 // um comando depois do outro, como num terminal de verdade.
 function enqueue(el: Element) {
   const now = performance.now()
-  const wait = Math.min(Math.max(busyUntil - now, 0), MAX_WAIT)
+  const wait = Math.round(Math.min(Math.max(busyUntil - now, 0), MAX_WAIT))
   const chars = Number(getComputedStyle(el).getPropertyValue('--n')) || 0
   busyUntil = now + wait + TYPE_DELAY + chars * TYPE_SPEED + OUTPUT_TIME
   show(el, wait)
@@ -54,6 +54,18 @@ function getObserver() {
     { rootMargin: '0px 0px -12% 0px' },
   )
   return observer
+}
+
+/**
+ * Fura a fila: quando a pessoa pede uma seção (pelo menu ou pelo `cat`),
+ * o comando dela começa na hora, em vez de esperar as seções que só passaram
+ * pela tela durante a rolagem.
+ */
+export function revealNow(id: string) {
+  const el = document.getElementById(id)
+  if (!el || !pending.has(el)) return
+  busyUntil = 0
+  enqueue(el)
 }
 
 /** Callback ref: `<section className="term" ref={reveal}>`. */

@@ -13,6 +13,11 @@ React 19, TypeScript, Vite, Tailwind CSS v4 e lucide-react.
 
 O layout imita um terminal: cada seção abre com um comando (`cat resumo.md`, por exemplo), que é digitado quando a seção entra na tela, e o conteúdo aparece em seguida como a saída do comando. As animações são todas em CSS (`src/index.css`); `src/lib/reveal.ts` só avisa quando cada seção aparece e põe os comandos em fila. São duas fontes: IBM Plex Mono nos comandos, títulos e rótulos, e IBM Plex Sans nos parágrafos. Na impressão os comandos somem e o resultado é um currículo comum em duas páginas A4.
 
+Duas partes do terminal são de verdade:
+
+- **Menu `ls`** (`src/components/SectionsMenu.tsx`): logo abaixo do nome, lista as seções como arquivos, e cada um leva até a sua seção.
+- **Prompt interativo** (`src/components/Shell.tsx`): no fim da página, aceita `help`, `ls`, `cat <arquivo>`, `open <linkedin|github|email>`, `lang <pt|en>`, `theme`, `pdf`, `top` e `clear`. Os textos ficam em `ui.shell`, nos arquivos de dados.
+
 ## Rodando localmente
 
 ```bash

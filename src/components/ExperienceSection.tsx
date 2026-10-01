@@ -5,7 +5,7 @@ import { dividerClass, labelClass, Section } from './Section'
 
 export function ExperienceSection({ cv }: { cv: CV }) {
   return (
-    <Section id="experience" title={cv.ui.sections.experience} command={cv.ui.commands.experience}>
+    <Section id="experience" title={cv.ui.sections.experience} command={`cat ${cv.ui.files.experience}`}>
       <div className="space-y-12">
         {cv.experience.map((job, jobIndex) => (
           <article key={jobIndex}>

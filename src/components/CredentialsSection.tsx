@@ -7,11 +7,11 @@ const titleClass = 'font-mono text-[0.9375rem] font-medium text-slate-900 dark:t
 const detailClass = 'mt-0.5 text-sm text-slate-500 dark:text-slate-400'
 
 export function CredentialsSection({ cv }: { cv: CV }) {
-  const { sections, commands } = cv.ui
+  const { sections, files } = cv.ui
 
   return (
     <>
-      <Section id="certifications" title={sections.certifications} command={commands.certifications}>
+      <Section id="certifications" title={sections.certifications} command={`cat ${files.certifications}`}>
         <ul className="space-y-4 print:space-y-1.5">
           {cv.certifications.map((cert, i) => (
             <li key={i} style={line(i)} className={rowClass}>
@@ -29,7 +29,7 @@ export function CredentialsSection({ cv }: { cv: CV }) {
         </ul>
       </Section>
 
-      <Section id="languages" title={sections.languages} command={commands.languages}>
+      <Section id="languages" title={sections.languages} command={`cat ${files.languages}`}>
         <ul className="space-y-4 print:space-y-1.5">
           {cv.languages.map((lang, i) => (
             <li key={i} style={line(i)} className={rowClass}>

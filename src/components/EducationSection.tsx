@@ -4,7 +4,7 @@ import { Section } from './Section'
 
 export function EducationSection({ cv }: { cv: CV }) {
   return (
-    <Section id="education" title={cv.ui.sections.education} command={cv.ui.commands.education}>
+    <Section id="education" title={cv.ui.sections.education} command={`cat ${cv.ui.files.education}`}>
       <ul className="space-y-4 print:space-y-1.5">
         {cv.education.map((edu, i) => (
           <li key={i} style={line(i)} className="out grid grid-cols-[2.25rem_1fr] print:grid-cols-1 print:break-inside-avoid">

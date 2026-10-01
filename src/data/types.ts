@@ -45,6 +45,17 @@ export interface Language {
   source: string
 }
 
+/** As seções do currículo. Cada chave é também o id da seção na página. */
+export type SectionKey =
+  | 'contact'
+  | 'summary'
+  | 'highlights'
+  | 'experience'
+  | 'skills'
+  | 'education'
+  | 'certifications'
+  | 'languages'
+
 export interface CV {
   meta: {
     title: string
@@ -69,16 +80,21 @@ export interface CV {
       certifications: string
       languages: string
     }
-    /** Comandos de terminal que abrem cada seção (sem acentos: são nomes de arquivo). */
-    commands: {
-      contact: string
-      summary: string
-      highlights: string
-      experience: string
-      skills: string
-      education: string
-      certifications: string
-      languages: string
+    /** Nome de arquivo de cada seção, usado nos comandos do terminal (sem acentos). */
+    files: Record<SectionKey, string>
+    /** Rótulo do menu de seções (a saída do `ls`). */
+    sectionsNav: string
+    /** Textos do terminal interativo no fim da página. */
+    shell: {
+      label: string
+      hint: string
+      /** Pares [comando, descrição] mostrados pelo `help`. */
+      help: [string, string][]
+      notFound: string
+      noSuchFile: string
+      usage: string
+      opening: string
+      sudo: string
     }
     downloadPdf: string
     savePdf: string

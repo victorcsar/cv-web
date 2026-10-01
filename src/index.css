@@ -75,17 +75,29 @@
 
 .type {
   display: inline-block;
-  width: 0;
   overflow: hidden;
   white-space: nowrap;
   vertical-align: bottom;
 }
 
+/* Antes da vez do comando, nada aparece. */
+.term:not([data-visible]) .type {
+  width: 0;
+}
+
+/*
+ * A animação só controla a largura enquanto digita. Quando termina, vale a
+ * largura natural do texto, então o comando sempre acaba inteiro (o fim de uma
+ * animação em passos pode arredondar para baixo e esconder o último caractere).
+ */
 .term[data-visible] .type {
-  animation: type calc(var(--n) * var(--type-speed)) steps(var(--n)) var(--type-delay) forwards;
+  animation: type calc(var(--n) * var(--type-speed)) steps(var(--n)) var(--type-delay) backwards;
 }
 
 @keyframes type {
+  from {
+    width: 0;
+  }
   to {
     width: calc(var(--n) * 1ch);
   }

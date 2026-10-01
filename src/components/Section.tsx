@@ -10,25 +10,28 @@ export const dividerClass = 'divide-y divide-slate-200 dark:divide-slate-800/80 
 export const linkClass =
   'text-slate-900 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-blue-700 hover:decoration-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-slate-100 dark:decoration-slate-700 dark:hover:text-sky-300 dark:hover:decoration-sky-400'
 
-interface PromptProps {
-  command?: string
-  /** `true` mantém o cursor piscando (o último prompt da página). */
-  idle?: boolean
-}
-
-// Uma linha de terminal: `victor@cesar:~$ comando`. O comando é digitado pelo CSS
-// quando o bloco `.term` em volta entra na tela. No celular o prompt encurta para `~$`.
-export function Prompt({ command = '', idle = false }: PromptProps) {
+// O começo de toda linha de terminal: `victor@cesar:~$`. No celular encurta para `~$`.
+export function PromptPrefix() {
   return (
-    <p aria-hidden="true" className="prompt font-mono text-[0.8125rem] leading-6 sm:text-sm print:hidden">
+    <span aria-hidden="true" className="whitespace-pre">
       <span className="hidden sm:inline">
         <span className="text-blue-700 dark:text-blue-400">victor@cesar</span>
         <span className="text-slate-400 dark:text-slate-600">:</span>
       </span>
       <span className="text-sky-700 dark:text-sky-400">~</span>
       <span className="text-slate-400 dark:text-slate-500">$ </span>
+    </span>
+  )
+}
+
+// Uma linha de terminal com um comando, que é digitado pelo CSS quando o bloco
+// `.term` em volta entra na tela.
+export function Prompt({ command }: { command: string }) {
+  return (
+    <p aria-hidden="true" className="prompt font-mono text-[0.8125rem] leading-6 sm:text-sm print:hidden">
+      <PromptPrefix />
       <span className="type text-slate-900 dark:text-white">{command}</span>
-      <span className={`cursor text-sky-600 dark:text-sky-400 ${idle ? '' : 'cursor-temp'}`} />
+      <span className="cursor cursor-temp text-sky-600 dark:text-sky-400" />
     </p>
   )
 }
