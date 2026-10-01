@@ -1,5 +1,5 @@
 // Gera as imagens estáticas do site: `npm run images`.
-// - public/og-image.png: prévia do link no LinkedIn, WhatsApp etc. (1200×630)
+// - public/og-image.jpg: prévia do link no LinkedIn, WhatsApp etc. (1200×630, JPEG leve: o WhatsApp no celular é exigente com o tamanho)
 // - public/apple-touch-icon.png: ícone ao salvar o site na tela inicial do celular (180×180)
 import { readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
@@ -72,8 +72,8 @@ const photo = await sharp(fileURLToPath(new URL('foto-perfil.jpg', PUBLIC)))
 
 await sharp(Buffer.from(background))
   .composite([{ input: photo, left: PHOTO_X, top: PHOTO_Y }])
-  .png({ compressionLevel: 9 })
-  .toFile(fileURLToPath(new URL('og-image.png', PUBLIC)))
+  .jpeg({ quality: 86, mozjpeg: true, chromaSubsampling: '4:4:4' })
+  .toFile(fileURLToPath(new URL('og-image.jpg', PUBLIC)))
 
 // Ícone da tela inicial: o mesmo "VC" do favicon, sem transparência (iOS não aceita).
 const favicon = await readFile(new URL('favicon.svg', PUBLIC))
@@ -83,5 +83,5 @@ await sharp(favicon, { density: 300 })
   .png()
   .toFile(fileURLToPath(new URL('apple-touch-icon.png', PUBLIC)))
 
-console.log('Imagens geradas em public/: og-image.png, apple-touch-icon.png')
+console.log('Imagens geradas em public/: og-image.jpg, apple-touch-icon.png')
 
