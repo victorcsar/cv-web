@@ -2,6 +2,7 @@
 // - public/og-terminal.jpg: prévia do link no LinkedIn, WhatsApp etc. (1200×630, JPEG leve:
 //   o WhatsApp no celular só mostra o cartão grande com imagem leve)
 // - public/apple-touch-icon.png: ícone ao salvar o site na tela inicial do celular (180×180)
+// - public/palestra/og-palestra.jpg: prévia do link da palestra em /palestra (1200×630)
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import opentype from 'opentype.js'
@@ -32,8 +33,8 @@ const stack = ['TypeScript', 'NestJS', 'React', 'Python', 'Docker', 'Nginx']
 
 // O texto é desenhado como <path> a partir da IBM Plex Mono do próprio projeto.
 // Assim a imagem sai igual em qualquer máquina, sem depender das fontes instaladas.
-function loadFont(weight) {
-  const file = new URL(`../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-${weight}-normal.woff`, import.meta.url)
+function loadFont(weight, family = 'ibm-plex-mono') {
+  const file = new URL(`../node_modules/@fontsource/${family}/files/${family}-latin-${weight}-normal.woff`, import.meta.url)
   const data = readFileSync(fileURLToPath(file))
   return opentype.parse(data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength))
 }
@@ -124,4 +125,49 @@ await sharp(Buffer.from(touchIcon), { density: 300 })
   .png()
   .toFile(fileURLToPath(new URL('apple-touch-icon.png', PUBLIC)))
 
-console.log('Imagens geradas em public/: og-terminal.jpg, apple-touch-icon.png')
+// Prévia do link da palestra: o visual da capa dos slides (cores da apresentação, não do site).
+// O bloco de texto fica no centro para que a miniatura quadrada de alguns apps mostre o título.
+const TALK = { bg: '#060B17', accent: '#4CC3F5', title: '#EEF2F7', text: '#C3CDDB', muted: '#8592A6', line: '#22304A' }
+const talkFonts = { sans400: loadFont(400, 'ibm-plex-sans'), sans600: loadFont(600, 'ibm-plex-sans') }
+const talkText = (font, content, x, y, size, fill) =>
+  `<path d="${font.getPath(content, x, y, size).toPathData(2)}" fill="${fill}"/>`
+
+const TALK_TITLE_SIZE = 84
+const talkTitleWidth = fonts[500].getAdvanceWidth('Em produção', TALK_TITLE_SIZE)
+const talkX = Math.round((WIDTH - talkTitleWidth) / 2)
+const talkLine2End = talkX + fonts[500].getAdvanceWidth('desde 2023', TALK_TITLE_SIZE)
+
+const talkCover = `
+<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}">
+  <rect width="100%" height="100%" fill="${TALK.bg}"/>
+
+  <!-- circuito dos slides de abertura e encerramento -->
+  <g fill="none" stroke="${TALK.line}" stroke-width="3" stroke-linejoin="round">
+    <path d="M1200 110H1090L1050 150V300H960"/>
+    <path d="M1200 360H1110L1070 400V520H985"/>
+    <path d="M1200 470H1150V630"/>
+    <path d="M0 190H70L110 230V420H210"/>
+    <path d="M0 520H150"/>
+  </g>
+  <g fill="${TALK.line}">
+    <circle cx="960" cy="300" r="7"/><circle cx="985" cy="520" r="6"/>
+    <circle cx="210" cy="420" r="7"/><circle cx="150" cy="520" r="6"/>
+  </g>
+  <g fill="${TALK.accent}"><circle cx="1050" cy="235" r="5"/><circle cx="110" cy="330" r="5"/></g>
+
+  ${talkText(fonts[400], 'victor@palestra:~$ uptime', talkX, 168, 24, TALK.accent)}
+  ${talkText(fonts[500], 'Em produção', talkX, 266, TALK_TITLE_SIZE, TALK.title)}
+  ${talkText(fonts[500], 'desde 2023', talkX, 360, TALK_TITLE_SIZE, TALK.title)}
+  <rect x="${Math.round(talkLine2End + 10)}" y="300" width="44" height="62" fill="${TALK.accent}"/>
+
+  <rect x="${talkX}" y="408" width="${Math.round(talkTitleWidth)}" height="2" fill="${TALK.line}"/>
+  ${talkText(talkFonts.sans600, 'Víctor César', talkX, 462, 34, TALK.title)}
+  ${talkText(talkFonts.sans400, 'Desenvolvedor Full Stack / DevOps', talkX, 500, 24, TALK.text)}
+  ${talkText(fonts[400], 'Café com TI 2026 · 21/10/2026', talkX, 540, 20, TALK.muted)}
+</svg>`
+
+await sharp(Buffer.from(talkCover))
+  .jpeg({ quality: 88, mozjpeg: true, chromaSubsampling: '4:4:4' })
+  .toFile(fileURLToPath(new URL('palestra/og-palestra.jpg', PUBLIC)))
+
+console.log('Imagens geradas em public/: og-terminal.jpg, apple-touch-icon.png, palestra/og-palestra.jpg')
